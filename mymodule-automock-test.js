@@ -1,9 +1,7 @@
-var stubs = require('./automock')([
+var mockRequire = require('./automock')([
   './big-complex-module'
 ]);
-
-var proxyquire = require('proxyquire');
-var mymodule = proxyquire('./mymodule', stubs);
+var mymodule = mockRequire('./mymodule');
 
 var assert = require('assert');
 

@@ -1,4 +1,5 @@
 var stubber = require('./stubber');
+var proxyquire = require('proxyquire');
 
 function makeModuleMock(moduleName) {
   var m = stubber(require(moduleName));
@@ -11,5 +12,7 @@ module.exports = function(modulesToMock) {
   modulesToMock.forEach(function(moduleName) {
     stubs[moduleName] = makeModuleMock(moduleName);
   });
-  return stubs;
+  return function(moduleName) {
+    return proxyquire(moduleName, stubs);
+  };
 };
